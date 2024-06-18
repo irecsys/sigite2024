@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 1000px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": 450, "label": "Teaching in amazon\nEC2", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "Teaching in amazon EC2", "x": 0.448439640447543, "y": 0.01324479745913694}, {"color": "#97c2fc", "id": 548, "label": "Hands-on Exercises\nfor IT Security\nEducation", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "Hands-on Exercises for IT Security Education", "x": -0.40874433736730265, "y": 0.432823714446436}, {"color": "#97c2fc", "id": 168, "label": "A student-managed\nnetworking\nlaboratory", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "A student-managed networking laboratory", "x": -0.033531974273964205, "y": -0.3113919411324717}, {"color": "#97c2fc", "id": 329, "label": "Using VMware VCenter\nlab manager in\nundergraduate\neducation for system\nadministration and\nnetwork security", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "Using VMware VCenter lab manager in undergraduate education for system administration and network security", "x": -0.028844026027351095, "y": 0.08616104243182172}, {"color": "#97c2fc", "id": 233, "label": "Decentralized\nvirtualization in\nsystems\nadministration\neducation", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "Decentralized virtualization in systems administration education", "x": 0.14294159588429559, "y": 0.44664320517931766}, {"color": "#97c2fc", "id": 424, "label": "MOBILE: a MOBile\ninstructional\nlaboratory\nenvironment for\nhands-on information\ntechnology education", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "MOBILE: a MOBile instructional laboratory environment for hands-on information technology education", "x": 0.056648248634471925, "y": -0.8851818791775214}, {"color": "#97c2fc", "id": 272, "label": "Databases in the\ncloud: a work in\nprogress", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "Databases in the cloud: a work in progress", "x": -1.0, "y": 0.12080407328733367}, {"color": "#97c2fc", "id": 275, "label": "Developing a\nmultifunctional\nnetwork laboratory\nfor teaching and\nresearch", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "Developing a multifunctional network laboratory for teaching and research", "x": -0.10575548367963428, "y": -0.5035355200678875}, {"color": "#97c2fc", "id": 500, "label": "Teaching a\nnetworking class for\nfreshmen: course\ndesign and lessons\nlearned", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "Teaching a networking class for freshmen: course design and lessons learned", "x": -0.0458581207997664, "y": -0.6980082306815176}, {"color": "#97c2fc", "id": 468, "label": "Using virtual\nmachines to improve\nlearning and save\nresources in an\nintroductory IT\ncourse", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "Using virtual machines to improve learning and save resources in an introductory IT course", "x": -0.1311682125061279, "y": 0.6200897097000257}, {"color": "#97c2fc", "id": 469, "label": "Migrating a voice\ncommunications\nlaboratory to a\nvirtualized\nenvironment", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "Migrating a voice communications laboratory to a virtualized environment", "x": 0.954625201032229, "y": 0.671725862632991}, {"color": "#97c2fc", "id": 666, "label": "Teaching Network\nAdministration in\nthe Era of\nVirtualization: A\nLayered Approach", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "Teaching Network Administration in the Era of Virtualization: A Layered Approach", "x": 0.06314422986219598, "y": -0.5276490568933497}, {"color": "#97c2fc", "id": 349, "label": "Introducing cloud\ncomputing with a\nsenior design\nproject in\nundergraduate\neducation of\ncomputer system and\nnetwork\nadministration", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "Introducing cloud computing with a senior design project in undergraduate education of computer system and network administration", "x": -0.48201406195944113, "y": 0.09060600626012817}, {"color": "#97c2fc", "id": 542, "label": "Lab on a Stick", "labelHighlightBold": true, "shape": "dot", "size": 15.0, "title": "Lab on a Stick", "x": 0.5701173007528506, "y": 0.44366821655555816}]);
+                  edges = new vis.DataSet([{"from": 450, "title": "4", "to": 329, "width": 4}, {"from": 548, "title": "4", "to": 329, "width": 4}, {"from": 168, "title": "5", "to": 275, "width": 5}, {"from": 168, "title": "5", "to": 329, "width": 5}, {"from": 168, "title": "5", "to": 666, "width": 5}, {"from": 168, "title": "4", "to": 500, "width": 4}, {"from": 329, "title": "5", "to": 233, "width": 5}, {"from": 329, "title": "4", "to": 275, "width": 4}, {"from": 329, "title": "9", "to": 349, "width": 9}, {"from": 329, "title": "4", "to": 468, "width": 4}, {"from": 329, "title": "4", "to": 542, "width": 4}, {"from": 329, "title": "4", "to": 666, "width": 4}, {"from": 424, "title": "4", "to": 275, "width": 4}, {"from": 424, "title": "6", "to": 500, "width": 6}, {"from": 424, "title": "6", "to": 666, "width": 6}, {"from": 272, "title": "4", "to": 349, "width": 4}, {"from": 275, "title": "11", "to": 500, "width": 11}, {"from": 275, "title": "11", "to": 666, "width": 11}, {"from": 500, "title": "16", "to": 666, "width": 16}, {"from": 469, "title": "5", "to": 542, "width": 5}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"configure": {"enabled": false}, "nodes": {"font": {"size": 7}}, "edges": {"smooth": true, "color": {"opacity": 0.25}}, "physics": {"enabled": true, "forceAtlas2Based": {"springLength": 100}, "solver": "forceAtlas2Based"}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
